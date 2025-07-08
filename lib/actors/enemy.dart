@@ -4,6 +4,8 @@ import 'package:shadowbladerush/actors/ninja.dart';
 import 'package:shadowbladerush/game.dart';
 import 'dart:math' as math;
 
+import 'package:shadowbladerush/objects/coin.dart';
+
 // Abstract Enemy class with common properties and methods
 abstract class Enemy extends CircleComponent
     with HasGameReference<ShadowBladeRush> {
@@ -88,9 +90,21 @@ abstract class Enemy extends CircleComponent
     }
   }
 
+  // void takeDamage(double damage) {
+  //   health -= damage;
+  //   if (health <= 0) {
+  //     removeFromParent();
+  //   }
+  // }
+
   void takeDamage(double damage) {
     health -= damage;
     if (health <= 0) {
+      // Coin drop olasılığı
+      if (math.Random().nextDouble() < 0.3) {
+        // %30 olasılık
+        game.add(Coin(position: position.clone()));
+      }
       removeFromParent();
     }
   }

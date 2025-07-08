@@ -18,7 +18,6 @@ class Sword extends SpriteAnimationComponent
       : super(
           size: Vector2(66.2, 53),
           anchor: Anchor.center,
-          // paint: Paint()..color = Colors.grey.shade300,
         ) {
     position = startPosition.clone();
     angle = atan2(direction.y, direction.x);

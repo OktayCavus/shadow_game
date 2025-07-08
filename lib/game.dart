@@ -8,7 +8,7 @@ import 'package:shadowbladerush/actors/ninja.dart';
 import 'package:shadowbladerush/managers/spawn_manager.dart';
 import 'package:shadowbladerush/overlays/abilities_overlay.dart';
 
-class ShadowBladeRush extends FlameGame {
+class ShadowBladeRush extends FlameGame with HasCollisionDetection {
   late Ninja ninja;
   late SpawnManager spawnManager;
 

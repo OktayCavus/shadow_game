@@ -77,7 +77,7 @@ class RangedEnemy extends Enemy {
 }
 
 // Projektil sınıfı - artık public
-class Projectile extends CircleComponent
+class Projectile extends SpriteAnimationComponent
     with HasGameReference<ShadowBladeRush> {
   Projectile({
     required Vector2 startPosition,
@@ -85,7 +85,8 @@ class Projectile extends CircleComponent
     required this.damage,
   }) : super(
           anchor: Anchor.center,
-          paint: Paint()..color = Colors.yellow,
+          // paint: Paint()..color = Colors.yellow,
+          size: Vector2(26, 30),
         ) {
     position = startPosition.clone();
     _direction = (targetPosition - startPosition).normalized();
@@ -99,7 +100,14 @@ class Projectile extends CircleComponent
   @override
   Future<void> onLoad() async {
     super.onLoad();
-    radius = 8;
+    // radius = 8;
+    animation = await game.loadSpriteAnimation(
+        'enemy_fire.png',
+        SpriteAnimationData.sequenced(
+          amount: 8,
+          textureSize: Vector2(26, 30),
+          stepTime: 0.1,
+        ));
   }
 
   @override
@@ -118,7 +126,7 @@ class Projectile extends CircleComponent
 
     // Ninja'ya çarpma kontrolü
     final distanceToNinja = position.distanceTo(game.ninja.position);
-    if (distanceToNinja < radius + 20) {
+    if (distanceToNinja < size.x) {
       // 20 ninja'nın yarıçapı
       // Ninja kamuflajda değilse hasar ver
       if (!game.ninja.isInCamouflage) {

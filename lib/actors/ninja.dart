@@ -1,3 +1,4 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:shadowbladerush/game.dart';
@@ -5,7 +6,7 @@ import 'package:shadowbladerush/objects/sword.dart';
 import 'package:shadowbladerush/actors/enemy.dart';
 
 class Ninja extends SpriteAnimationComponent
-    with HasGameReference<ShadowBladeRush> {
+    with HasGameReference<ShadowBladeRush>, CollisionCallbacks {
   Ninja(this.joystick)
       : super(
           anchor: Anchor.center,
@@ -30,17 +31,18 @@ class Ninja extends SpriteAnimationComponent
 
   bool isThrowingAttack = false;
   double throwAttackTimer = 0.0;
-  final double throwAttackDuration = 1.0; // 10 frame * 0.1 stepTime
+  final double throwAttackDuration = 1.0;
 
   Vector2 lastDirection = Vector2(1, 0);
 
-  // Yön takibi için değişken (true = sağ, false = sol)
   bool facingRight = true;
 
   @override
   Future<void> onLoad() async {
     super.onLoad();
     position = Vector2(game.size.x / 2, game.size.y / 2);
+
+    add(RectangleHitbox());
 
     animation = await game.loadSpriteAnimation(
         'stand.png',
